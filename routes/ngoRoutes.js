@@ -42,7 +42,7 @@ router.put("/claim/:id", (req, res) => {
   const sql = `
     UPDATE donors 
     SET status = 'claimed', claimed_by = ? 
-    WHERE id = ? AND status = 'available'
+    WHERE id = ? AND status = 'active'
   `;
 
   db.query(sql, [ngoName, donationId], (err, result) => {
