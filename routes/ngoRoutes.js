@@ -12,7 +12,7 @@ router.get("/donations", (req, res) => {
     SELECT 
       id, donor_name, donor_phone, food_type, food_quantity, address, created_at
     FROM donors
-    WHERE status = 'available'
+    WHERE status = 'active'
     ORDER BY created_at DESC
   `;
 
@@ -42,7 +42,7 @@ router.put("/claim/:id", (req, res) => {
   const sql = `
     UPDATE donors 
     SET status = 'claimed', claimed_by = ? 
-    WHERE id = ? AND status = 'active'
+    WHERE id = ? AND status = 'available'
   `;
 
   db.query(sql, [ngoName, donationId], (err, result) => {
