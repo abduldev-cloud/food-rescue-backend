@@ -33,7 +33,7 @@ router.get("/stats", (req, res) => {
 
 router.get("/donors", (req, res) => {
   db.query(
-    "SELECT id, name, email, phone FROM users WHERE role='donor' ORDER BY id DESC",
+    "SELECT id, name, email, phone_no FROM users WHERE role='donor' ORDER BY id DESC",
     (err, results) => {
       if (err) return res.status(500).json({ error: err });
       res.json(results);
