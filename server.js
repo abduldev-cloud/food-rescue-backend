@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/donors", donorRoutes);
-app.use("/app/ngo", ngoRoutes);
+app.use("/api/ngo", ngoRoutes);
 app.use("/admin", adminRoutes);
 
 app.get("/", (req, res) => {
