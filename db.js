@@ -41,7 +41,7 @@ db.connect((err) => {
   if (err) {
     console.error("Database connection failed:", err);
   } else {
-    console.log("Connected to TiDB Cloud MySQL");
+    console.log("Connected to Coolify MySQL");
   }
 });
 
