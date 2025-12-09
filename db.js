@@ -8,11 +8,11 @@ const db = mysql.createConnection({
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
-  ssl: {
-    minVersion: 'TLSv1.2',
-    rejectUnauthorized: false
-  }
-  // ssl: false
+  // ssl: {
+  //   minVersion: 'TLSv1.2',
+  //   rejectUnauthorized: false
+  // }
+  ssl: false
 });
 
 db.connect((err) => {
