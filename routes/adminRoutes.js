@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get("/stats", (req, res) => {
   const stats = {};
+  let done = 0;
+  let hasError = false;  // <-- prevent multiple responses
 
   const queries = [
     { key: "totalDonors", sql: "SELECT COUNT(*) AS count FROM users WHERE role = 'donor'" },
@@ -14,21 +16,27 @@ router.get("/stats", (req, res) => {
     { key: "totalFood", sql: "SELECT SUM(food_quantity) AS total FROM donors" },
   ];
 
-  let done = 0;
-
   queries.forEach(q => {
     db.query(q.sql, (err, result) => {
-      if (err) return res.status(500).json({ error: err });
+      if (hasError) return; // prevent double response
 
-      stats[q.key] = result[0].count || result[0].total || 0;
+      if (err) {
+        hasError = true;
+        return res.status(500).json({ error: err.message });
+      }
+
+      const row = result[0];
+      stats[q.key] = row.count ?? row.total ?? 0;
 
       done++;
-      if (done === queries.length) {
-        res.json(stats);
+
+      if (done === queries.length && !hasError) {
+        return res.json(stats);
       }
     });
   });
 });
+
 
 
 router.get("/donors", (req, res) => {
